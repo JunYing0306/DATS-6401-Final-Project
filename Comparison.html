@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style/style.css" />
+    <title>DATS 6401 - Final Project (Comparison)</title>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.load('current', {'packages':['sankey']});
+        google.charts.setOnLoadCallback(drawAllSheets);
+        
+        function drawAllSheets() {
+            drawSheetName('sankeysummer', 'SELECT A,B,C',
+                            sankeysummer);
+            drawSheetName('sankeywinter', 'SELECT A,B,C',
+                            sankeywinter);
+            drawSheetName('summer2016', 'SELECT O,C,J,A,N',
+                            populationsummer);
+            drawSheetName('winter2014', 'SELECT O,C,J,A,N',
+                            populationwinter);
+            drawSheetName('summer2016', 'SELECT O,K,D,A,J',
+                            gdpsummer);
+            drawSheetName('summer2016', 'SELECT O,L,D,A,J',
+                            healthsummer);
+            drawSheetName('summer2016', 'SELECT D,K',
+                            gdpvsnum);
+            drawSheetName('summer2016', 'SELECT D,N',
+                            popvsnum);
+        } //drawAllSheets
+
+        function drawSheetName(sheetName, query, responseHandler) {
+            var queryString = encodeURIComponent(query);
+            var query = new google.visualization.Query(
+                "https://docs.google.com/spreadsheets/d/1rCeboDIt5WajD5kloxcfJgKAtB5KGiesCopFMYCSvGs/gviz/tq?sheet=" 
+                + sheetName + "&headers=1&tq=" + queryString);
+            query.send(responseHandler);
+        } //drawSheetName
+
+        function sankeysummer(response) {
+            var data = response.getDataTable();
+            var options = {
+                height: 400,
+            };
+            var chart = new google.visualization.Sankey(
+                document.getElementById("sankeysummer_div")
+            );
+            chart.draw(data, options);
+        } 
+        
+        function sankeywinter(response) {
+            var data = response.getDataTable();
+            var options = {
+                height: 400,
+            };
+            var chart = new google.visualization.Sankey(
+                document.getElementById("sankeywinter_div")
+            );
+            chart.draw(data, options);
+        } 
+
+        function populationsummer(response) {
+            var data = response.getDataTable();
+            var options = {
+                height: 500,
+                width: 900,
+                hAxis: {title: 'Total Participating Events'},
+                vAxis: {title: 'Total Medals Won'},
+                bubble: {textStyle: {fontSize: 10}}};
+            var chart = new google.visualization.BubbleChart(
+                document.getElementById("populationsummer_div")
+            );
+            chart.draw(data, options);
+        }
+
+        function populationwinter(response) {
+            var data = response.getDataTable();
+            var options = {
+                height: 500,
+                width: 900,
+                hAxis: {title: 'Total Participating Events'},
+                vAxis: {title: 'Total Medals Won'},
+                bubble: {textStyle: {fontSize: 10}}};
+            var chart = new google.visualization.BubbleChart(
+                document.getElementById("populationwinter_div")
+            );
+            chart.draw(data, options);
+        }
+        function gdpsummer(response) {
+            var data = response.getDataTable();
+            var options = {
+                height: 500,
+                width: 900,
+                hAxis: {title: 'GDP per Capita'},
+                vAxis: {title: 'Number of Athletes'},
+                bubble: {textStyle: {fontSize: 10}}};
+            var chart = new google.visualization.BubbleChart(
+                document.getElementById("gdpsummer_div")
+            );
+            chart.draw(data, options);
+        }
+        function healthsummer(response) {
+            var data = response.getDataTable();
+            var options = {
+                height: 500,
+                width: 900,
+                hAxis: {title: 'Health care Spending per Capita'},
+                vAxis: {title: 'Number of Athletes'},
+                bubble: {textStyle: {fontSize: 10}}};
+            var chart = new google.visualization.BubbleChart(
+                document.getElementById("healthsummer_div")
+            );
+            chart.draw(data, options);
+        }
+        function gdpvsnum(response) {
+            var data = response.getDataTable();
+            var options = {
+                hAxis: {title: 'Participants'},
+                vAxis: {title: 'GDP'},
+                legend: 'none',
+                trendlines: { 0: {} }    // Draw a trendline for data series 0.
+            };
+
+            var chart = new google.visualization.ScatterChart(
+                document.getElementById('gdpvsnum_div'));
+            chart.draw(data, options);
+        }
+        function popvsnum(response) {
+            var data = response.getDataTable();
+            var options = {
+                hAxis: {title: 'Participants'},
+                vAxis: {title: 'Population'},
+                legend: 'none',
+                trendlines: { 0: {} }    // Draw a trendline for data series 0.
+            };
+
+            var chart = new google.visualization.ScatterChart(
+                document.getElementById('popvsnum_div'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+
+<body>
+    <div id='main'>
+        <div id='header'>
+            <div id='logo'>
+                <div id='image'><img src="image/logo.jpg"></div>
+                <div id='logo_text'>
+                    <h1>Olympics Development and National Participation Differences</h1>
+                    <h2>DATS 6401 - Visualization</h2>
+                    <h2>Instructor - Nima Zahadat, Ph.D.</h2>
+                </div>
+            </div>
+            
+            <div id='menubar'>
+            <div id='project'><h1>Final Project - Jun Ying</h1></div>
+                <ul id='menu'>
+                    <li><a href='index.html'>Introduction</a></li>
+                    <li><a href='Country.html'>Country</a></li>
+                    <li class='selected'><a href='Comparison.html'>Comparison</a></li>
+                    <li><a href='Summary.html'>Summary</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id='content'>
+            <div id='text'>
+                <h1>Countries performance</h1>
+                <p>I selected six of the 12 countries with the largest number of participants and 
+                    compared their Olympic performance.</p>
+            </div>
+            <div id='plot'>
+                <div id='title1'><h1>Rio 2016 Summer Olympics</h1></div>
+                <div id='sankeysummer_div' style="width: 800px; height: 400px;"></div>
+                <div id='populationsummer_div' style="width: 900px; height: 500px;"></div>
+            </div>
+            <div id='plot'>
+                <div id='title1'><h1>Sochi 2014 Winter Olympics</h1></div>
+                <div id='sankeywinter_div' style="width: 800px; height: 400px;"></div>
+                <div id='populationwinter_div' style="width: 900px; height: 500px;"></div>
+            </div>
+            <div id='text'>
+                <h1>About Influence</h1>
+                <p>Below, I will use the data from the 2016 Rio Summer Olympics to observe the relationship 
+                    between GDP per capita and the number of participants, and between health care per capita 
+                    and the number of participants.</p>
+            </div>
+            <div id='plot1'>
+                <div id='gdpsummer_div' style="width: 900px; height: 500px;"></div>
+                <div id='healthsummer_div' style="width: 900px; height: 500px;"></div>
+            </div>
+            <div id='text'>
+                <h1>Trends</h1>
+                <p>By visualizing GDP versus participants, and population versus participants, Find out if 
+                    there is a trend between them</p>
+            </div>
+            <div id='plot1'>
+                <div id='gdpvsnum_div' style="width: 800px; height: 400px;"></div>
+                <div id='popvsnum_div' style="width: 800px; height: 400px;"></div>
+            </div>
+        </div>
+        <div id='footer'>Copyright &copy; 2020</div>
+    </div>
+</body>
+</html>

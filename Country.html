@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style/style.css" />
+    <title>DATS 6401 - Final Project (Country)</title>
+    <script src="echarts.min.js"></script>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+    <div id='main'>
+        <div id='header'>
+            <div id='logo'>
+                <div id='image'><img src="image/logo.jpg"></div>
+                <div id='logo_text'>
+                    <h1>Olympics Development and National Participation Differences</h1>
+                    <h2>DATS 6401 - Visualization</h2>
+                    <h2>Instructor - Nima Zahadat, Ph.D.</h2>
+                </div>
+            </div>
+            
+            <div id='menubar'>
+            <div id='project'><h1>Final Project - Jun Ying</h1></div>
+                <ul id='menu'>
+                    <li><a href='index.html'>Introduction</a></li>
+                    <li class='selected'><a href='Country.html'>Country</a></li>
+                    <li><a href='Comparison.html'>Comparison</a></li>
+                    <li><a href='Summary.html'>Summary</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id='content'>
+            <div id='text'>
+                <h1>About Participation of Countries</h1>
+                <p>I chosed G7 (Canada, France, Germany, Italy, Japan, United Kingdom and United States) and 
+                    BRICS (South Africa, China, India, Russia and Brazil) as observation objects, and visualized 
+                    the Summer Olympics from 2000 to 2016, and the Winter Olympics from 2002 to 2014.</p>
+            </div>
+            <div id='eplot'>
+                <div id="summercountry_div" style="width: 900px;height:400px;"></div>
+                <script type="text/javascript" style="position: relative;">
+                    var summercountry = echarts.init(document.getElementById('summercountry_div'));
+                    $.get('data/summercountry.json', function (data) {
+                        option = {
+                            title: {
+                                text: 'Summer Olympics'
+                            },
+                            tooltip: {
+                                trigger: 'axis'
+                            },
+                            legend: {},
+                            dataset: {
+                                dimensions:  ["Year", 2000, 2004, 2008, 2012, 2016],
+                                source: data
+                            },
+                            xAxis: {type: 'category',
+                                    axisLabel:{interval: 0, rotate:30}},
+                            yAxis: {},
+                            series: [
+                                {type: 'bar'},
+                                {type: 'bar'},
+                                {type: 'bar'},
+                                {type: 'bar'},
+                                {type: 'bar'}
+                            ]
+                        }
+                        summercountry.setOption(option);
+                    });
+                </script>
+
+                <div id="sunburst_div" style="width: 900px;height:400px;"></div>
+                <script type="text/javascript" style="position: relative;">
+                    var sunburst = echarts.init(document.getElementById('sunburst_div'));
+                    var data = [
+                            {name: 'France',
+                                children: [{name: 'Female',value: 167,
+                                                children: [{name: 'Gold', value: 4}, {name: 'Silver', value: 6}, {name: 'Bronze', value: 2}]}, 
+                                        {name: 'Male',value: 225,
+                                                children: [{name: 'Gold', value: 6}, {name: 'Silver', value: 6}, {name: 'Bronze', value: 10}]}]}, 
+                            {name: 'Germany',
+                                children: [{name: 'Female',value: 194,
+                                                children: [{name: 'Gold', value: 4}, {name: 'Silver', value: 5}, {name: 'Bronze', value: 4}]}, 
+                                        {name: 'Male',value: 224,
+                                                children: [{name: 'Gold', value: 8}, {name: 'Silver', value: 3}, {name: 'Bronze', value: 8}]}]},
+                            {name: 'U.K.',
+                                children: [{name: 'Female',value: 159,
+                                                children: [{name: 'Gold', value: 8}, {name: 'Silver', value: 7}, {name: 'Bronze', value: 6}]}, 
+                                        {name: 'Male',value: 201,
+                                                children: [{name: 'Gold', value: 11}, {name: 'Silver', value: 11}, {name: 'Bronze', value: 6}]}]},
+                            {name: 'U.S.',
+                                children: [{name: 'Female',value: 291,
+                                                children: [{name: 'Gold', value: 19}, {name: 'Silver', value: 11}, {name: 'Bronze', value: 11}]}, 
+                                        {name: 'Male',value: 264,
+                                                children: [{name: 'Gold', value: 16}, {name: 'Silver', value: 9}, {name: 'Bronze', value: 13}]}]},
+                            {name: 'China',
+                                children: [{name: 'Female',value: 241,
+                                                children: [{name: 'Gold', value: 12}, {name: 'Silver', value: 7}, {name: 'Bronze', value: 12}]}, 
+                                        {name: 'Male',value: 151,
+                                                children: [{name: 'Gold', value: 9}, {name: 'Silver', value: 4}, {name: 'Bronze', value: 7}]}]},
+                            {name: 'Brazil',
+                                children: [{name: 'Female',value: 207,
+                                                children: [{name: 'Gold', value: 2}, {name: 'Silver', value: 2}, {name: 'Bronze', value: 1}]}, 
+                                        {name: 'Male',value: 255,
+                                                children: [{name: 'Gold', value: 5}, {name: 'Silver', value: 1}, {name: 'Bronze', value: 3}]}]},
+                            ]
+                    option = {
+                        title: {
+                                text: '6 Countries Performances at Rio 2016 Summer Olympics'
+                            },
+                        series: {
+                            type: 'sunburst',
+                            highlightPolicy: 'ancestor',
+                            data: data,
+                            radius: [0, '90%'],
+                            label: {
+                                rotate: 'radial'
+                            }
+                        }
+                    };
+                    sunburst.setOption(option);
+                </script>
+
+                <div id="winterrcountry_div" style="width: 900px;height:400px;"></div>
+                <script type="text/javascript" style="position: relative;">
+                    var wintercountry = echarts.init(document.getElementById('winterrcountry_div'));
+                    $.get('data/wintercountry.json', function (data) {
+                        option = {
+                            title: {
+                                text: 'Winter Olympics'
+                            },
+                            tooltip: {
+                                trigger: 'axis'
+                            },
+                            legend: {},
+                            dataset: {
+                                dimensions:  ["Year",2002,2006,2010,2014],
+                                source: data
+                            },
+                            xAxis: {type: 'category',
+                                    axisLabel:{interval: 0, rotate:30}},
+                            yAxis: {},
+                            series: [
+                                {type: 'bar'},
+                                {type: 'bar'},
+                                {type: 'bar'},
+                                {type: 'bar'},
+                            ]
+                        }
+                        wintercountry.setOption(option);
+                    });
+                </script>
+
+                <div id="wintermedal_div" style="width: 900px;height:400px;"></div>
+                <script type="text/javascript" style="position: relative;">
+                    var wintermedal = echarts.init(document.getElementById('wintermedal_div'));
+                    $.get('data/wintermedal.json', function (data) {
+                        option = {
+                            title: {
+                                text: 'Suchi 2014 Winter Olympics'
+                            },
+                            tooltip: {
+                                trigger: 'axis'
+                            },
+                            dataset: {
+                                dimensions:  ["Country","Canada","Germany","Italy","Japan","USA","Russia"],
+                                source: data
+                            },
+                            angleAxis: {
+                                type: 'category',
+
+                            },
+                            radiusAxis: {
+                            },
+                            polar: {
+                            },
+                            series: [{
+                                type: 'bar',
+                                coordinateSystem: 'polar',
+                                name: 'Gold',
+                                stack: 'a'
+                            }, {
+                                type: 'bar',
+                                coordinateSystem: 'polar',
+                                name: 'Silver',
+                                stack: 'a'
+                            }, {
+                                type: 'bar',
+                                coordinateSystem: 'polar',
+                                name: 'Bronze',
+                                stack: 'a'
+                            }],
+                            legend: {
+                                show: true,
+                                data: ["Gold","Silver","Bronze"]
+                            }
+                        }
+                        wintermedal.setOption(option);
+                    });
+                </script>
+            </div>
+        </div>
+
+
+        
+
+        <div id='footer'>Copyright &copy; 2020</div>
+    </div>
+</body>
+</html>

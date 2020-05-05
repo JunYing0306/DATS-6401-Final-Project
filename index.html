@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style/style.css" />
+    <title>DATS 6401 - Final Project (Introduction)</title>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawAllSheets);
+        function drawAllSheets() {
+            drawSheetName('num2016', 'SELECT A,B',
+                            athlete2016);
+            drawSheetName('num2014', 'SELECT A,B',
+                            athlete2014);
+            drawSheetName('Summer', 'SELECT A,B,C,D',
+                            summerline);
+            drawSheetName('Winter', 'SELECT A,B,C,D',
+                            winterline);
+            drawSheetName('event2016', 'SELECT A,B',
+                            event2016);
+            drawSheetName('event2014', 'SELECT A,B',
+                            event2014);
+            drawSheetName('Summer', 'SELECT A,F,G',
+                            summerbar);
+            drawSheetName('Winter', 'SELECT A,F,G',
+                            winterbar);
+        } //drawAllSheets
+
+        function drawSheetName(sheetName, query, responseHandler) {
+            var queryString = encodeURIComponent(query);
+            var query = new google.visualization.Query(
+                "https://docs.google.com/spreadsheets/d/1rCeboDIt5WajD5kloxcfJgKAtB5KGiesCopFMYCSvGs/gviz/tq?sheet=" 
+                + sheetName + "&headers=1&tq=" + queryString);
+            query.send(responseHandler);
+        } //drawSheetName
+
+        function athlete2016(response) {
+            var data = response.getDataTable();
+            data.sort({column: 1, desc:true});
+            var options = {
+                height: 400,
+                colorAxis: {colors: ['#a6c0fe', '#f68084']} //orange to blue
+            };
+            var chart = new google.visualization.GeoChart(
+                document.getElementById("athlete2016_div")
+            );
+            chart.draw(data, options);
+        } 
+
+        function athlete2014(response) {
+            var data = response.getDataTable();
+            data.sort({column: 1, desc:true});
+            var options = {
+                height: 400,
+                colorAxis: {colors: ['#a6c0fe', '#f68084']} //orange to blue
+            };
+            var chart = new google.visualization.GeoChart(
+                document.getElementById("athlete2014_div")
+            );
+            chart.draw(data, options);
+        } 
+
+        function summerline(response) {
+            var data = response.getDataTable();
+            var options = {
+                height: 400
+            };
+            var chart = new google.visualization.LineChart(
+                document.getElementById("summerline_div")
+            );
+            chart.draw(data, options);
+        } 
+
+        function winterline(response) {
+            var data = response.getDataTable();
+            var options = {
+                height: 400
+            };
+            var chart = new google.visualization.LineChart(
+                document.getElementById("winterline_div")
+            );
+            chart.draw(data, options);
+        } 
+
+        function event2016(response) {
+            var data = response.getDataTable();
+            data.sort({column: 1, desc:true});
+            var options = {
+                height: 400,
+                pieStartAngle: 100,
+                slices: {  
+                    0: {offset: 0.05},
+                    1: {offset: 0.1},
+                    2: {offset: 0.1},
+                    3: {offset: 0.1},
+                    4: {offset: 0.15},
+                    5: {offset: 0.15},
+                    6: {offset: 0.15},
+                },
+            };
+            var chart = new google.visualization.PieChart(
+                document.getElementById("event2016_div")
+            );
+            chart.draw(data, options);
+        } 
+
+        function event2014(response) {
+            var data = response.getDataTable();
+            data.sort({column: 1, desc:true});
+            var options = {
+                height: 400,
+                pieStartAngle: 100,
+                slices: {  
+                    0: {offset: 0.05},
+                    1: {offset: 0.1},
+                    2: {offset: 0.1},
+                    3: {offset: 0.1},
+                    4: {offset: 0.15},
+                },
+            };
+            var chart = new google.visualization.PieChart(
+                document.getElementById("event2014_div")
+            );
+            chart.draw(data, options);
+        } 
+
+        function summerbar(response) {
+            var data = response.getDataTable();
+            var options = {
+                height: 400,
+                bar: { groupWidth: '75%' },
+                isStacked: true,
+            };
+            var chart = new google.visualization.ColumnChart(
+                document.getElementById("summerbar_div")
+            );
+            chart.draw(data, options);
+        } 
+
+        function winterbar(response) {
+            var data = response.getDataTable();
+            var options = {
+                height: 400,
+                bar: { groupWidth: '75%' },
+                isStacked: true,
+            };
+            var chart = new google.visualization.ColumnChart(
+                document.getElementById("winterbar_div")
+            );
+            chart.draw(data, options);
+        } 
+    </script>
+</head>
+
+<body>
+    <div id='main'>
+        <div id='header'>
+            <div id='logo'>
+                <div id='image'><img src="image/logo.jpg"></div>
+                <div id='logo_text'>
+                    <h1>Olympics Development and National Participation Differences</h1>
+                    <h2>DATS 6401 - Visualization</h2>
+                    <h2>Instructor - Nima Zahadat, Ph.D.</h2>
+                </div>
+            </div>
+            
+            <div id='menubar'>
+            <div id='project'><h1>Final Project - Jun Ying</h1></div>
+                <ul id='menu'>
+                    <li class='selected'><a href='index.html'>Introduction</a></li>
+                    <li><a href='Country.html'>Country</a></li>
+                    <li><a href='Comparison.html'>Comparison</a></li>
+                    <li><a href='Summary.html'>Summary</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id='content'>
+            <div id='text'>
+                <h1>About Project</h1>
+                <p>The main goal of this project is to find out the influencing factors of participating in the Olympic 
+                    Games, and to observe the Olympic performance of various countries. The datasets of this project are 
+                    from <a href="https://data.worldbank.org/">World Bank Open Data</a> and 
+                    <a href="http://kaggle.com">Kaggle</a>.
+                </p>
+                <p>Let's take a look at the recent Olympics.    
+                </p>
+            </div>
+            <div id='plot'>
+                <div id='title1'><h1>Rio 2016 Summer Olympics</h1></div>
+                <div id='athlete2016_div' style="width: 800px; height: 400px;"></div>
+            </div>
+            <div id='plot'>
+                <div id='title1'><h1>Sochi 2014 Winter Olympics</h1></div>
+                <div id='athlete2014_div' style="width: 800px; height: 400px;"></div>
+            </div>
+            <div id='text'>
+                <p>Almost all countries in the world participated in the Rio 2016 Olympic Games.
+                    However, for Africa, the Winter Olympics are less attractive.</p>
+            </div>
+            <div id='plot'>
+                <div id='title1'><h1>The development and changes of the Summer Olympics</h1></div>
+                <div id='summerline_div' style="width: 800px; height: 400px;"></div>
+                <div id='title1'><h1>The development and changes of the Winter Olympics</h1></div>
+                <div id='winterline_div' style="width: 800px; height: 400px;"></div>
+            </div>
+            <div id='text'>
+                <p>We can see that the number of participating teams and events at the Summer Olympics
+                     has leveled off. However, the Winter Olympics are still growing.</p>
+            </div>
+            <div id='plot'>
+                <div id='title1'><h1>Events of the Rio 2016 Summer Olympics</h1></div>
+                <div id='event2016_div' style="width: 800px; height: 400px;"></div>
+                <div id='title1'><h1>Events of the Sochi 2014 Winter Olympics</h1></div>
+                <div id='event2014_div' style="width: 800px; height: 400px;"></div>
+            </div>
+            <div id='plot'>
+                <div id='title1'><h1>Number of athletes in Summer Olympics</h1></div>
+                <div id='summerbar_div' style="width: 800px; height: 400px;"></div>
+                <div id='title1'><h1>Number of athletes in Winter Olympics</h1></div>
+                <div id='winterbar_div' style="width: 800px; height: 400px;"></div>
+            </div>
+            <div id='text'>
+                <p>We can see from the graphs below that there are more and more female athletes.</p>
+            </div>
+        </div>
+        <div id='footer'>Copyright &copy; 2020</div>
+    </div>
+</body>
+</html>
